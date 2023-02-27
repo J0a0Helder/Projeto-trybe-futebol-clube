@@ -9,12 +9,15 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      team_name: {
+      teamName: {
         allowNull: false,
+        field: 'team_name',
         type: Sequelize.STRING,
       },
     })
   },
 
-  down: async (queryInterface, Sequelize) => await queryInterface.dropTable('teams')
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable('teams');
+  }
 };
