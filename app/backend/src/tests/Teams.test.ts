@@ -1,13 +1,12 @@
 import * as sinon from 'sinon';
 import * as chai from 'chai';
-// @ts-ignore
-import chaiHttp = require('chai-http');
+import 'chai-http';
 import Teams from '../database/models/TeamsModel';
 import { Model } from 'sequelize';
 import { app } from '../app';
 import TeamsService from '../services/TeamsService';
 
-chai.use(chaiHttp);
+chai.use(require('chai-http'));
 
 const { expect } = chai;
 
@@ -31,6 +30,19 @@ describe('Realiza os testes do endpoint "/teams"', () => {
     chai.expect(data).to.be.equal(outputMock);
     expect(result.status).to.equal(200);
     expect(result.body[0]).to.be.deep.equal(bestTeam);
+  });
+
+  it('Testa o retorno de "getById"', async () => {
+    sinon.stub(Model, 'findByPk').resolves(outputMock[0]);
+
+    const teamsService = new TeamsService();
+    const data = await teamsService.getById(13);
+
+    const result = await chai.request(app).get('/teams/:id')
+
+    chai.expect(data).to.be.equal(outputMock[0]);
+    expect(result.status).to.equal(200);
+    expect(result.body).to.be.deep.equal(bestTeam);
   });
 
 })
