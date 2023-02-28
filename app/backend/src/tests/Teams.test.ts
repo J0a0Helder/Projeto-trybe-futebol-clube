@@ -16,24 +16,19 @@ const outputMock: Teams[] = [new Teams(bestTeam)]
 
 describe('Realiza os testes do endpoint "/teams"', () => {
 
-  beforeEach(() => {
-    sinon.stub(Model, 'findAll').resolves(outputMock);
-  })
-
-  afterEach(() => {
-    (Teams.findAll as sinon.SinonStub).restore();
+  afterEach(function() {
+    sinon.restore();
   })
 
   it('Testa o retorno de "getAll"', async () => {
+    sinon.stub(Model, 'findAll').resolves(outputMock);
+
     const teamsService = new TeamsService();
-    const result = await teamsService.getAll();
+    const data = await teamsService.getAll();
 
-    chai.expect(result).to.be.equal(outputMock);
-  });
-
-  it('Testa o método get do endpoint', async () => {
     const result = await chai.request(app).get('/teams')
 
+    chai.expect(data).to.be.equal(outputMock);
     expect(result.status).to.equal(200);
     expect(result.body[0]).to.be.deep.equal(bestTeam);
   });
