@@ -1,7 +1,7 @@
 import { sign } from 'jsonwebtoken';
 import * as bcrypt from 'bcryptjs';
 import { ModelStatic } from 'sequelize';
-import auth from '../../Auth/AuthService';
+import auth from '../Auth/AuthService';
 import User from '../../database/models/UsersModel';
 import ILogin from '../interfaces/ILogin';
 import IServiceLogin from '../interfaces/IServiceLogin';
