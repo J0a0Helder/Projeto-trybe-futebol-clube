@@ -1,10 +1,10 @@
 import * as sinon from 'sinon';
 import * as chai from 'chai';
 import 'chai-http';
-import Teams from '../database/models/TeamsModel';
 import { Model } from 'sequelize';
 import { app } from '../app';
-import TeamsService from '../services/TeamsService';
+import Teams from '../database/models/TeamsModel';
+import TeamsService from '../api/services/TeamsService';
 
 chai.use(require('chai-http'));
 
