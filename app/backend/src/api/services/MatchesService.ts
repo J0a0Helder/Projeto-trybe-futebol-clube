@@ -1,4 +1,6 @@
 import { ModelStatic } from 'sequelize';
+import { verify } from 'jsonwebtoken';
+import auth from '../Auth/AuthService';
 import Teams from '../../database/models/TeamsModel';
 import Matches from '../../database/models/MatchesModel';
 import IMatches from '../interfaces/IMatches';
@@ -20,5 +22,20 @@ export default class MatchesService implements IServiceMatches {
     if (inProgress) return matchesInProgress as unknown as IMatches[];
 
     return matches as unknown as IMatches[];
+  }
+
+  async finishById(id: number, token: string): Promise<{
+    type?: string; message?: string;
+  }> {
+    try {
+      verify(token, auth.secret);
+      await this.model.update(
+        { inProgress: false },
+        { where: { id } },
+      );
+      return { message: 'Finished' };
+    } catch (err) {
+      return { type: 'INVALID_TOKEN', message: 'Token must be a valid token' };
+    }
   }
 }
