@@ -10,4 +10,14 @@ export default class LoginMiddelware {
     if (result.error) return res.status(401).send({ message: 'Invalid email or password' });
     next();
   };
+
+  public loginToken = async (req: Request, res: Response, next: NextFunction) => {
+    const token = req.header('Authorization');
+
+    if (!token) {
+      return res.status(401).json({ message: 'Token not found' });
+    }
+
+    next();
+  };
 }

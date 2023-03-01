@@ -8,5 +8,6 @@ const loginMiddleware = new LoginMiddelware();
 const loginRouter = Router();
 
 loginRouter.post('/', loginMiddleware.loginUserFields, loginController.loginUser);
+loginRouter.get('/role', loginMiddleware.loginToken, loginController.getRole);
 
 export default loginRouter;
