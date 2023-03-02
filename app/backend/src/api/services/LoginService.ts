@@ -3,9 +3,9 @@ import * as bcrypt from 'bcryptjs';
 import { ModelStatic } from 'sequelize';
 import auth from '../Auth/AuthService';
 import User from '../../database/models/UsersModel';
-import ILogin from '../interfaces/ILogin';
-import IServiceLogin from '../interfaces/IServiceLogin';
-import IToken from '../interfaces/IToken';
+import ILogin from '../interfaces/ILogin/ILogin';
+import IServiceLogin from '../interfaces/Iservices/IServiceLogin';
+import IToken from '../interfaces/ILogin/IToken';
 
 export default class LoginService implements IServiceLogin {
   protected model: ModelStatic<User> = User;

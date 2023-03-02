@@ -1,4 +1,4 @@
-import ILogin from './ILogin';
+import ILogin from '../ILogin/ILogin';
 
 export default interface IServiceLogin {
   loginUser(data: ILogin): Promise<{

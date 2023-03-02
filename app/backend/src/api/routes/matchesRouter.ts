@@ -9,5 +9,6 @@ const matchesRouter = Router();
 
 matchesRouter.get('/', matchesController.getAll);
 matchesRouter.patch('/:id/finish', loginMiddleware.loginToken, matchesController.finishById);
+matchesRouter.patch('/:id', loginMiddleware.loginToken, matchesController.updateById);
 
 export default matchesRouter;
