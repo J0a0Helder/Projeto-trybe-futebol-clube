@@ -46,9 +46,6 @@ export default class MatchesService implements IServiceMatches {
     const homeTeam = await this.teamService.getById(data.homeTeamId);
     const awayTeam = await this.teamService.getById(data.awayTeamId);
 
-    console.log(homeTeam);
-    console.log(awayTeam);
-
     if (data.awayTeamId === data.homeTeamId) {
       return { status: 422, message: 'It is not possible to create a match with two equal teams' };
     }

@@ -10,6 +10,6 @@ const matchesRouter = Router();
 matchesRouter.get('/', matchesController.getAll);
 matchesRouter.patch('/:id/finish', loginMiddleware.loginToken, matchesController.finishById);
 matchesRouter.patch('/:id', loginMiddleware.loginToken, matchesController.updateById);
-matchesRouter.post('/', matchesController.insertNew);
+matchesRouter.post('/', loginMiddleware.loginToken, matchesController.insertNew);
 
 export default matchesRouter;

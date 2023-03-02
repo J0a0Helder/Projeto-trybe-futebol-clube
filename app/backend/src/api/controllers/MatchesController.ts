@@ -27,7 +27,7 @@ export default class MatchesController {
   public insertNew = async (req: Request, res: Response) => {
     const newMatch = await this.matchesService.insertNew(req.body);
     if (newMatch.status) {
-      return res.status(newMatch.status).json(newMatch.message);
+      return res.status(newMatch.status).json({ message: newMatch.message });
     }
     res.status(201).json(newMatch);
   };
