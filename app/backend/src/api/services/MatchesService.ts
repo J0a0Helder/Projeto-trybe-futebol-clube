@@ -4,9 +4,12 @@ import Matches from '../../database/models/MatchesModel';
 import IMatches from '../interfaces/IMatches/IMatches';
 import IServiceMatches from '../interfaces/Iservices/IServiceMatches';
 import IMatcheUpdate from '../interfaces/IMatches/IMatcheUpdate';
+import IMatcheNew from '../interfaces/IMatches/IMatcheNew';
+import TeamsService from './TeamsService';
 
 export default class MatchesService implements IServiceMatches {
   protected model: ModelStatic<Matches> = Matches;
+  protected teamService: TeamsService = new TeamsService();
 
   async getAll(inProgress: string | undefined): Promise<IMatches[]> {
     const matches = await this.model.findAll({
@@ -37,5 +40,24 @@ export default class MatchesService implements IServiceMatches {
       { where: { id: data.id } },
     );
     return { message: 'Updated' };
+  }
+
+  async insertNew(data: IMatcheNew): Promise<IMatcheNew | { status: number, message: string }> {
+    const homeTeam = await this.teamService.getById(data.homeTeamId);
+    const awayTeam = await this.teamService.getById(data.awayTeamId);
+
+    console.log(homeTeam);
+    console.log(awayTeam);
+
+    if (data.awayTeamId === data.homeTeamId) {
+      return { status: 422, message: 'It is not possible to create a match with two equal teams' };
+    }
+
+    if (!homeTeam || !awayTeam) {
+      return { status: 404, message: 'There is no team with such id!' };
+    }
+
+    const newMatch = await this.model.create({ ...data, inProgress: true });
+    return newMatch as unknown as IMatches;
   }
 }
