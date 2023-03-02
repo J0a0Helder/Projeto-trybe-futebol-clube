@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
+import { verify } from 'jsonwebtoken';
 import validateLoginObject from './loginSchema';
+import auth from '../Auth/AuthService';
 
 export default class LoginMiddelware {
   public loginUserFields = async (req: Request, res: Response, next: NextFunction) => {
@@ -18,6 +20,11 @@ export default class LoginMiddelware {
       return res.status(401).json({ message: 'Token not found' });
     }
 
-    next();
+    try {
+      verify(token, auth.secret);
+      next();
+    } catch (err) {
+      return res.status(401).json({ message: 'Token must be a valid token' });
+    }
   };
 }
