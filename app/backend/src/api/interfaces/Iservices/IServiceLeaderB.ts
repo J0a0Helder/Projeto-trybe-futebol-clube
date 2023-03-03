@@ -1,3 +1,5 @@
+import ILeader from '../ILeader/ILeader';
+
 export default interface IServiceLeaderB {
-  getAll(): Promise<[]>
+  getHomePerformance(): Promise<ILeader[]>
 }
